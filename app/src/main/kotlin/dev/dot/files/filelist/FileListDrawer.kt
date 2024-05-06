@@ -60,7 +60,7 @@ fun FileListDrawerSheet(
             NavigationDrawerItem(
                 label = { Text(text = "Share via FTP") },
                 selected = false,
-                onClick = { /*TODO*/},
+                onClick = { /*TODO*/ },
                 icon = { Icon(Icons.Outlined.RssFeed, null) },
                 badge = {
                     if (isServerRunning) {
@@ -79,7 +79,7 @@ fun FileListDrawerSheet(
             NavigationDrawerItem(
                 label = { Text(text = "Add mount point") },
                 selected = false,
-                onClick = { /*TODO*/},
+                onClick = { /*TODO*/ },
                 icon = { Icon(Icons.Outlined.Add, null) },
             )
 
@@ -87,13 +87,13 @@ fun FileListDrawerSheet(
             NavigationDrawerItem(
                 label = { Text(text = "Settings") },
                 selected = false,
-                onClick = { /*TODO*/},
+                onClick = { /*TODO*/ },
                 icon = { Icon(Icons.Outlined.Settings, null) },
             )
             NavigationDrawerItem(
                 label = { Text(text = "About") },
                 selected = false,
-                onClick = { /*TODO*/},
+                onClick = { /*TODO*/ },
                 icon = { Icon(Icons.Outlined.Interests, null) },
             )
         }

@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
   alias(libs.plugins.android.application)
+  alias(libs.plugins.compose.compiler)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.ksp)
@@ -59,7 +60,6 @@ android {
     buildConfig = true
     compose = true
   }
-  composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
   packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
@@ -67,17 +67,19 @@ spotless {
   kotlin {
     target("**/*.kt")
     ktlint("1.2.1")
-        .customRuleSets(listOf("io.nlopez.compose.rules:ktlint:0.3.19"))
+        .customRuleSets(listOf("io.nlopez.compose.rules:ktlint:0.3.20"))
         .editorConfigOverride(
             mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable"))
-    ktfmt("0.47").dropboxStyle()
+    ktfmt("0.49").dropboxStyle()
     licenseHeader("")
   }
   kotlinGradle {
     target("**/*.gradle.kts")
-    ktfmt("0.47")
+    ktfmt("0.49")
   }
 }
+
+composeCompiler { enableStrongSkippingMode = true }
 
 dependencies {
   implementation(libs.androidx.activity.compose)

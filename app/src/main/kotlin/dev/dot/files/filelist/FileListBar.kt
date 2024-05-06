@@ -58,7 +58,7 @@ fun FileListTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { /*TODO*/}) { Icon(Icons.Default.Search, "Search") }
+            IconButton(onClick = { /*TODO*/ }) { Icon(Icons.Default.Search, "Search") }
             IconButton(onClick = onSortClicked) { Icon(Icons.AutoMirrored.Default.Sort, "Sort") }
 
             var expanded by rememberSaveable { mutableStateOf(isMenuExtended) }
