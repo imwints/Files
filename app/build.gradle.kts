@@ -67,7 +67,7 @@ spotless {
   kotlin {
     target("**/*.kt")
     ktlint("1.2.1")
-        .customRuleSets(listOf("io.nlopez.compose.rules:ktlint:0.3.19"))
+        .customRuleSets(listOf("io.nlopez.compose.rules:ktlint:0.3.20"))
         .editorConfigOverride(
             mapOf("ktlint_function_naming_ignore_when_annotated_with" to "Composable"))
     ktfmt("0.47").dropboxStyle()
