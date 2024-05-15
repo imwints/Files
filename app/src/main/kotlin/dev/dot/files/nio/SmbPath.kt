@@ -21,7 +21,7 @@ class SmbPath(private val fileSystem: SmbFileSystem, private val path: String) :
     override fun register(
         watcher: WatchService?,
         events: Array<out WatchEvent.Kind<*>>?,
-        vararg modifiers: WatchEvent.Modifier?
+        vararg modifiers: WatchEvent.Modifier?,
     ): WatchKey {
         TODO("Not yet implemented")
     }

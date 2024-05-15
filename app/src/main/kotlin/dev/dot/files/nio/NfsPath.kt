@@ -2,7 +2,6 @@ package dev.dot.files.nio
 
 import java.io.File
 import java.net.URI
-import java.nio.file.FileSystem
 import java.nio.file.LinkOption
 import java.nio.file.Path
 import java.nio.file.WatchEvent
@@ -21,7 +20,7 @@ class NfsPath(private val fileSystem: NfsFileSystem, private val path: String) :
     override fun register(
         watcher: WatchService?,
         events: Array<out WatchEvent.Kind<*>>?,
-        vararg modifiers: WatchEvent.Modifier?
+        vararg modifiers: WatchEvent.Modifier?,
     ): WatchKey {
         TODO("Not yet implemented")
     }

@@ -8,7 +8,10 @@ import java.nio.file.WatchService
 import java.nio.file.attribute.UserPrincipalLookupService
 import java.nio.file.spi.FileSystemProvider
 
-class NfsFileSystem : FileSystem() {
+class NfsFileSystem(
+    private val provider: NfsFileSystemProvider,
+    private val host: String,
+) : FileSystem() {
     private var isOpen = false
 
     override fun close() {

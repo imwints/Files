@@ -8,12 +8,11 @@ import java.nio.file.PathMatcher
 import java.nio.file.WatchService
 import java.nio.file.attribute.UserPrincipalLookupService
 
-class SmbFileSystem(private val provider: SmbFileSystemProvider) : FileSystem() {
+class SmbFileSystem(private val provider: SmbFileSystemProvider, private val authority: String) :
+    FileSystem() {
     private val rootDirectory = SmbPath(this, "/")
 
-    init {
-
-    }
+    init {}
 
     override fun close() {
         TODO("Not yet implemented")

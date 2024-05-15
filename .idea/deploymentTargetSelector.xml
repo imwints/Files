@@ -16,9 +16,6 @@
       <SelectionState runConfigName="NewFileWorkerTest (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="NewDirectoryWorkerTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="notificationsample">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

@@ -7,6 +7,8 @@ import java.nio.file.CopyOption
 import java.nio.file.DirectoryStream
 import java.nio.file.FileStore
 import java.nio.file.FileSystem
+import java.nio.file.FileSystemAlreadyExistsException
+import java.nio.file.FileSystemNotFoundException
 import java.nio.file.LinkOption
 import java.nio.file.OpenOption
 import java.nio.file.Path
@@ -14,35 +16,58 @@ import java.nio.file.attribute.BasicFileAttributes
 import java.nio.file.attribute.FileAttribute
 import java.nio.file.attribute.FileAttributeView
 import java.nio.file.spi.FileSystemProvider
+import java.util.concurrent.ConcurrentHashMap
 
 class SmbFileSystemProvider : FileSystemProvider() {
-    override fun getScheme(): String {
-        return SCHEME
+    private val cache = ConcurrentHashMap<String, SmbFileSystem>()
+
+    override fun getScheme() = SCHEME
+
+    private fun checkUri(uri: URI) {
+        require(uri.scheme.lowercase() == scheme)
+        require(uri.host.isNotEmpty())
     }
 
+    private fun createFileSystem(authority: String) = SmbFileSystem(this, authority)
+
     override fun newFileSystem(uri: URI?, env: MutableMap<String, *>?): FileSystem {
-        TODO("Not yet implemented")
+        checkUri(uri!!)
+        val authority = uri.authority
+        if (cache.containsKey(authority)) {
+            throw FileSystemAlreadyExistsException(authority)
+        }
+        val fileSystem = createFileSystem(authority)
+        cache[authority] = fileSystem
+        return fileSystem
     }
 
     override fun getFileSystem(uri: URI?): FileSystem {
-        TODO("Not yet implemented")
+        checkUri(uri!!)
+        val authority = uri.authority
+        return cache[authority] ?: throw FileSystemNotFoundException(authority)
+    }
+
+    private fun ensureFileSystem(uri: URI): FileSystem {
+        val authority = uri.authority
+        return cache[authority] ?: createFileSystem(authority)
     }
 
     override fun getPath(uri: URI?): Path {
-        TODO("Not yet implemented")
+        checkUri(uri!!)
+        return ensureFileSystem(uri).getPath(uri.path)
     }
 
     override fun newByteChannel(
         path: Path?,
         options: MutableSet<out OpenOption>?,
-        vararg attrs: FileAttribute<*>?
+        vararg attrs: FileAttribute<*>?,
     ): SeekableByteChannel {
         TODO("Not yet implemented")
     }
 
     override fun newDirectoryStream(
         dir: Path?,
-        filter: DirectoryStream.Filter<in Path>?
+        filter: DirectoryStream.Filter<in Path>?,
     ): DirectoryStream<Path> {
         TODO("Not yet implemented")
     }
@@ -82,7 +107,7 @@ class SmbFileSystemProvider : FileSystemProvider() {
     override fun <V : FileAttributeView?> getFileAttributeView(
         path: Path?,
         type: Class<V>?,
-        vararg options: LinkOption?
+        vararg options: LinkOption?,
     ): V {
         TODO("Not yet implemented")
     }
@@ -90,7 +115,7 @@ class SmbFileSystemProvider : FileSystemProvider() {
     override fun <A : BasicFileAttributes?> readAttributes(
         path: Path?,
         type: Class<A>?,
-        vararg options: LinkOption?
+        vararg options: LinkOption?,
     ): A {
         TODO("Not yet implemented")
     }
@@ -98,7 +123,7 @@ class SmbFileSystemProvider : FileSystemProvider() {
     override fun readAttributes(
         path: Path?,
         attributes: String?,
-        vararg options: LinkOption?
+        vararg options: LinkOption?,
     ): MutableMap<String, Any> {
         TODO("Not yet implemented")
     }
@@ -107,7 +132,7 @@ class SmbFileSystemProvider : FileSystemProvider() {
         path: Path?,
         attribute: String?,
         value: Any?,
-        vararg options: LinkOption?
+        vararg options: LinkOption?,
     ) {
         TODO("Not yet implemented")
     }
